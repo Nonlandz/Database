@@ -11,7 +11,7 @@
            
         <form>
                 <div class="mb-5">
-                <h3 class="ms-1"><strong>login</strong></h3>
+                <h3 class="ms-1"><strong>ล็อคอิน</strong></h3>
                 </div>
                 <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Username</label>
@@ -22,7 +22,12 @@
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" style="width:500px">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary mb-3">Submit</button>
+
+            <div class="text sign-up-text ">
+                  ยังไม่มีบัญชีใช่ไหม
+                  <router-link to="/register"><label for="flip">สร้างบัญชี</label> </router-link>
+                </div>
             </form>
         
             </div>  
