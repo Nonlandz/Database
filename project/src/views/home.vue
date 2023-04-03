@@ -83,10 +83,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.active {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff;
-}
-</style>
