@@ -1,4 +1,5 @@
 <template>
+  <Nav></Nav>
   <div class="container">
     <div class="booking-form card mt-5">
       <div class="card-header">
@@ -59,7 +60,12 @@
 </template>
 
 <script>
+import Nav from '../components/Nav.vue';
+
 export default {
+  components: {
+    Nav,
+  },
   data() {
     return {
       route: '',
