@@ -10,8 +10,8 @@
         </div>
 
         <div class="hidden sm:flex sm:items-center bg-white">
-          <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">หน้าแรก</a>
-          <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">ตั๋วของฉัน</a>
+          <a href="/home" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">หน้าแรก</a>
+          <a href="/myticket" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">ตั๋วของฉัน</a>
           <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">กระเป๋า</a>
           <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">แลกของรางวัล</a>
         </div>
