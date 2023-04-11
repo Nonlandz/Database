@@ -26,13 +26,17 @@
   <div class="md:flex md:items-center mb-6">
     <div class="md:w-1/3">
       <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
-        Route Id
+        Select route
       </label>
     </div>
-    <div class="md:w-2/3">
-      <input v-model="routeid" class="bg-gray-200 appearance-none border-2
-       border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight 
-       focus:outline-none focus:bg-white focus:border-purple-500" name="routeid" >
+  
+    <div class="md:w-2/3" >
+      <select class="bg-gray-200 appearance-none border-2
+       border-gray-200 rounded w-full py-2 px-4 text-black leading-tight 
+       focus:outline-none focus:bg-white focus:border-purple-500" name="routeid"  v-model="routeid" > 
+       <option :value="index.route_id" v-for="index in boss" :key="boss.route_id">{{ index.route_name }}</option>
+      </select>
+       
     </div>
   </div>
   <div class="md:flex md:items-center">
@@ -51,9 +55,10 @@
   export default {
       data() {
         return {
-          trainnum: '',
-          date: '',
-          routeid: '',
+          trainnum: null,
+          date: null,
+          routeid: null,
+          selected:"",
       }
         },
         methods: {
@@ -62,24 +67,35 @@
       },
       submit(){
           var formData = new FormData();
-          formData.append("trainnum", this.trainnum);
           formData.append("date", this.date)
           formData.append("routeid", this.routeid)
+          formData.append("trainnum", this.trainnum);
 
           console.log(formData);
           axios.post('http://localhost:3001/addtrain', formData, {
               headers: {
-              'Content-Type': 'multipart/form-data'
+              'Content-Type': 'application/json'
               }
           }).then(response => {
             console.log(response)
           })
           .catch(error => {
-              console.log(error.response.data);
+              console.log(error.message);
           });
       },
       
-  }
+  },
+  created() {
+        axios.get("http://localhost:3001/route")
+            .then((response) => {
+            this.boss = response.data.route;
+            console.log(this.boss);
+           
+        })
+            .catch((err) => {
+            console.log(err);
+        });
+    }
   }
   </script>
 

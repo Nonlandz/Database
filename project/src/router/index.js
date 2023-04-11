@@ -43,6 +43,12 @@ const router = createRouter({
       name: 'addtrain',
       component: () => import('../views/Addtrain.vue')
     }
+    ,
+    {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('../views/CreateBlog.vue')
+    }
   ]
 })
 
