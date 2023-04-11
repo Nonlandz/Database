@@ -28,9 +28,14 @@
           <input id="telNumber" v-model="user.telNumber" type="number" required />
         </div>
 
-        <button type="submit" class="register-button">Register</button>
+        <button type="submit" class="register-button" @click=" register()">Register</button>
       </form>
+      <div class="text sign-up-text">
+                  Already have an account?
+                  <router-link to="/"><label for="flip">Login now</label> </router-link>
+                </div>
     </div>
+    
   </div>
 </template>
 
@@ -48,12 +53,41 @@ export default {
     };
   },
   methods: {
-    register() {
-      console.log(this.user);
-      // Perform registration logic here
-    },
+  async register() {
+    try {
+      const userData = {
+        Username: this.user.username,
+        Password: this.user.password,
+        Firstname: this.user.firstName,
+        Lastname: this.user.lastName,
+        Usertype: 'user', // Set the default user type
+        Tel: this.user.telNumber,
+        Point: 0, // Set the default points
+      };
+
+      const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const user = await response.json();
+        console.log(user);
+        // Redirect to login or dashboard page
+      } else {
+        const error = await response.json();
+        console.error(error);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   },
-};
+},
+
+}
 </script>
 
 <style>
