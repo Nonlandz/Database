@@ -85,7 +85,7 @@ export default {
         if (response.ok) {
           const user = await response.json()
           console.log(user)
-          // Redirect to login or dashboard page
+          this.$router.push('/');
         } else {
           const error = await response.json()
           console.error(error)
