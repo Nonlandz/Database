@@ -10,6 +10,6 @@ import { RouterView } from 'vue-router'
 <style>
 *{
   font-family: 'Mitr', sans-serif;
-  background-color: #EEB5B5;
+  
 }
 </style>

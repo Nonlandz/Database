@@ -1,37 +1,36 @@
 <template>
-  <div>
-    <b-container class="mt-5">
-      <b-row class="justify-content-md-center">
-        <b-col md="6">
-          <b-card class="shadow">
-            <b-card-title class="text-center mb-4">Register</b-card-title>
-            <b-form @submit.prevent="register">
-              <b-form-group label="Username" label-for="username">
-                <b-form-input id="username" v-model="user.username" type="text" required />
-              </b-form-group>
+  <div id="app">
+    <div class="container">
+      <h2 class="title">Register</h2>
+      <form @submit.prevent="register" class="register-form">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input id="username" v-model="user.username" type="text" required />
+        </div>
 
-              <b-form-group label="Password" label-for="password">
-                <b-form-input id="password" v-model="user.password" type="password" required />
-              </b-form-group>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input id="password" v-model="user.password" type="password" required />
+        </div>
 
-              <b-form-group label="First Name" label-for="firstName">
-                <b-form-input id="firstName" v-model="user.firstName" type="text" required />
-              </b-form-group>
+        <div class="input-group">
+          <label for="firstName">First Name</label>
+          <input id="firstName" v-model="user.firstName" type="text" required />
+        </div>
 
-              <b-form-group label="Last Name" label-for="lastName">
-                <b-form-input id="lastName" v-model="user.lastName" type="text" required />
-              </b-form-group>
+        <div class="input-group">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" v-model="user.lastName" type="text" required />
+        </div>
 
-              <b-form-group label="Telephone Number" label-for="telNumber">
-                <b-form-input id="telNumber" v-model="user.telNumber" type="tel" required />
-              </b-form-group>
+        <div class="input-group">
+          <label for="telNumber">Telephone Number</label>
+          <input id="telNumber" v-model="user.telNumber" type="number" required />
+        </div>
 
-              <b-button type="submit" variant="primary" class="w-100 mt-3">Register</b-button>
-            </b-form>
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
+        <button type="submit" class="register-button">Register</button>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -58,7 +57,55 @@ export default {
 </script>
 
 <style>
-.card {
-  border-radius: 1rem;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.register-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #3f51b5;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #283593;
 }
 </style>

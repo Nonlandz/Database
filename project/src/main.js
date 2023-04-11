@@ -101,6 +101,12 @@ import VirtualScroller from 'primevue/virtualscroller';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'primeicons/primeicons.css';
 // import Dialog from 'primevue/dialog';
+import 'primevue/resources/themes/saga-blue/theme.css'
+import 'primevue/resources/primevue.min.css'
+import 'primeicons/primeicons.css'
+import 'primeflex/primeflex.css'
+
+
 
 
 
