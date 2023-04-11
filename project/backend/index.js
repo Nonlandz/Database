@@ -10,10 +10,20 @@ app.use(bodyParser.json());
 app.use(testRouter.router)
 
 // Replace with your database credentials
-const sequelize = new Sequelize('train', 'root', ' ', {
+const sequelize = new Sequelize('DBproject', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
 });
+
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
 
 // Define User model
 const User = sequelize.define('User', {
@@ -46,6 +56,7 @@ const User = sequelize.define('User', {
   Tel: {
     type: DataTypes.STRING(10),
     allowNull: false,
+      unique: true,
   },
   Point: {
     type: DataTypes.INTEGER,
@@ -54,14 +65,20 @@ const User = sequelize.define('User', {
 }, {
   tableName: 'User',
   timestamps: false,
+  freezeTableName: true,
 });
 
 app.post('/register', async (req, res) => {
   try {
-    console.log('Received data from frontend:', req.body); // Add this line
+    console.log('Received data from frontend:', req.body);
 
-    const user = await User.create(req.body);
-    res.status(201).json(user);
+    const newUser = await User.create(req.body)
+      .catch((err) => {
+        console.error('Error while inserting data into the database:', err);
+        throw err;
+      });
+
+    res.status(201).json(newUser);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
