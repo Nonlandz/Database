@@ -72,6 +72,20 @@ app.post('/register', async (req, res) => {
   try {
     console.log('Received data from frontend:', req.body);
 
+    const existingUsername = await User.findOne({ where: { Username: req.body.Username } });
+    const existingTel = await User.findOne({ where: { Tel: req.body.Tel } });
+
+    if (existingUsername || existingTel) {
+      let errorMessage = '';
+      if (existingUsername) {
+        errorMessage += 'Username already exists. ';
+      }
+      if (existingTel) {
+        errorMessage += 'Telephone number already exists.';
+      }
+      throw new Error(errorMessage);
+    }
+
     const newUser = await User.create(req.body)
       .catch((err) => {
         console.error('Error while inserting data into the database:', err);
@@ -83,6 +97,8 @@ app.post('/register', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

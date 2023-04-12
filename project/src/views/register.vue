@@ -2,10 +2,11 @@
   <div id="app">
     <div class="container">
       <h2 class="title">Register</h2>
-      <form @submit.prevent="register" class="register-form">
+      <form @submit.prevent="register" class="register-form" ref="form">
         <div class="input-group">
           <label for="username">Username</label>
           <input id="username" v-model="user.username" type="text" required />
+          <p v-if="errorMessage && errorMessage.includes('Username')" class="error-message">{{ errorMessage }}</p>
         </div>
 
         <div class="input-group">
@@ -32,10 +33,13 @@
             pattern="^[0][0-9]{9}$"
             required
           />
+          <p v-if="errorMessage && errorMessage.includes('Telephone number already exists.')" class="error-message">{{ errorMessage }}</p>
         </div>
 
         <button type="submit" class="register-button" @click="register()">Register</button>
       </form>
+      <p v-if="showEmptyFieldsError" class="error-message">กรุณากรอกฟอร์มให้ครบทุกช่อง</p>
+
       <div class="text sign-up-text">
         Already have an account?
         <router-link to="/"><label for="flip">Login now</label> </router-link>
@@ -53,15 +57,27 @@ export default {
         password: '',
         firstName: '',
         lastName: '',
-        telNumber: ''
+        telNumber: '',
       },
-      isSubmitting: false
-    }
+      errorMessage: '',
+      showEmptyFieldsError: false,
+      isSubmitting: false,
+    };
   },
   methods: {
     async register() {
-      if (this.isSubmitting) return
-      this.isSubmitting = true
+      if (
+        !this.user.username ||
+        !this.user.password ||
+        !this.user.firstName ||
+        !this.user.lastName ||
+        !this.user.telNumber
+      ) {
+        this.showEmptyFieldsError = true;
+        return;
+      } else {
+        this.showEmptyFieldsError = false;
+      }
 
       try {
         const userData = {
@@ -89,7 +105,7 @@ export default {
         } else {
           const error = await response.json()
           console.error(error)
-          alert(error.error);
+          this.errorMessage = error.error;
         }
       } catch (err) {
         console.error(err)
@@ -152,5 +168,11 @@ input {
 
 .register-button:hover {
   background-color: #283593;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 </style>
