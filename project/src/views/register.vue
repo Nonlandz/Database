@@ -129,7 +129,7 @@ export default {
                         Swal.fire({
                             icon: 'success',
                             title: "Congratulations! You've successfully created your account.",
-                            confirmButtonText: `<a href="/signb" ">Go Login</a>`,
+                            confirmButtonText: `<a href="/" ">Go Login</a>`,
 
                         })
                     }
@@ -139,7 +139,7 @@ export default {
                         icon: 'error',
                         title: 'Oops...',
                         text: `${error.response.data}`,
-                        footer: 'this email is used already'
+                        footer: 'this Username is used already'
                     })
                 }
             }
