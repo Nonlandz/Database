@@ -14,11 +14,12 @@
           <a href="/myticket" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">ตั๋วของฉัน</a>
           <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">กระเป๋า</a>
           <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">แลกของรางวัล</a>
+
+          <!-- <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">{{ user.Username}}</a> -->
         </div>
 
         <div class="hidden sm:flex sm:items-center bg-white">
-          <a href="/" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">Sign in</a>
-          <a href="/register" class="text-gray-800 text-xl font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600 no-underline bg-white">Sign up</a>
+          <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">{{ this.userinfo.Username }}</a>
         </div>
 
 
@@ -40,3 +41,48 @@
   </div>
 
 </template>
+<script>
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import axios from 'axios'
+export default {
+  name: 'Nav',
+  data() {
+    return {
+      username:null,
+      userinfo:null
+    }
+  },
+  computed: {
+    route() {
+      return useRoute()
+    }
+  },
+  methods : {
+    logout(){
+
+    }
+  },
+  created() {
+  
+    this.username = localStorage.getItem("user");
+    console.log(this.username)
+   
+    
+    axios.get(`http://localhost:3001/userinfo/${this.username}`)
+      .then((response) => {
+        this.userinfo = response.data.userinfo[0];
+        console.log(this.userinfo);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      
+
+  },
+
+
+
+}
+
+</script>

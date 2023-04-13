@@ -34,7 +34,7 @@
       <select class="bg-gray-200 appearance-none border-2
        border-gray-200 rounded w-full py-2 px-4 text-black leading-tight 
        focus:outline-none focus:bg-white focus:border-purple-500" name="routeid"  v-model="routeid" > 
-       <option :value="index.route_id" v-for="index in boss" :key="boss.route_id">{{ index.route_name }}</option>
+       <option :value="index.route_id" v-for="index in boss" :key="index.route_id">{{ index.route_name }}</option>
       </select>
        
     </div>
@@ -59,6 +59,7 @@
           date: null,
           routeid: null,
           selected:"",
+          boss:"",
       }
         },
         methods: {
@@ -72,7 +73,7 @@
           formData.append("trainnum", this.trainnum);
 
           console.log(formData);
-          axios.post('http://localhost:3001/addtrain', formData, {
+          axios.post('http://localhost:3000/addtrain', formData, {
               headers: {
               'Content-Type': 'application/json'
               }
@@ -86,7 +87,7 @@
       
   },
   created() {
-        axios.get("http://localhost:3001/route")
+        axios.get("http://localhost:3000/route")
             .then((response) => {
             this.boss = response.data.route;
             console.log(this.boss);

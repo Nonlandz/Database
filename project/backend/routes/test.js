@@ -16,13 +16,13 @@ router = express.Router();
   }
 });
 
-router.get("/test", async function (req, res, next) {
+router.get("/user", async function (req, res, next) {
   try {
 
-    let [rows , fields] = await pool.query(`SELECT * FROM ticket`)
+    let [rows , fields] = await pool.query(`SELECT * FROM user`)
 
     return res.json( {
-      test: rows
+     user: rows
     });
   } catch (err) {
     return next(err)
@@ -37,7 +37,6 @@ router.post('/addtrain' , async function (req, res, next) {
     const conn = await pool.getConnection()
     // Begin transaction
     await conn.beginTransaction();
-  
     try {
       let results = await conn.query(
         "INSERT INTO train( date, route_id, train_num) VALUES( ?, ?, ?);",
@@ -56,6 +55,19 @@ router.post('/addtrain' , async function (req, res, next) {
       conn.release();
     }
   });
-
+  router.get("/userinfo/:username", async function (req, res, next) {
+    try {
+      let [rows , fields] = await pool.query(`SELECT * FROM user where username = ? `,  req.params.username)
+  
+      console.log(rows)
+      return res.json( {
+      
+       userinfo: rows
+      });
+    } catch (err) {
+      return next(err)
+    }
+  });
+  
 
 exports.router = router;
