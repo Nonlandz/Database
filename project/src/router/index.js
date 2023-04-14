@@ -1,4 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+
+function isAuthenticated(to, from, next) {
+  if (localStorage.getItem('user')) {
+    next();
+  } else {
+    next('/'); // Redirect to login page
+  }
+}
+
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,12 +27,14 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: () => import('../views/home.vue')
+      component: () => import('../views/home.vue'),
+      beforeEnter: isAuthenticated
     },
     {
       path: '/myticket',
       name: 'myticket',
-      component: () => import('../views/myticket.vue')
+      component: () => import('../views/myticket.vue'),
+      beforeEnter: isAuthenticated,
     },
     {
       path: '/register',
@@ -31,7 +44,8 @@ const router = createRouter({
     {
       path: '/prize',
       name: 'prize',
-      component: () => import('../views/prize.vue')
+      component: () => import('../views/prize.vue'),
+      beforeEnter: isAuthenticated,
     },
     {
       path: '/test',
@@ -41,7 +55,8 @@ const router = createRouter({
     {
       path: '/addtrain',
       name: 'addtrain',
-      component: () => import('../views/Addtrain.vue')
+      component: () => import('../views/Addtrain.vue'),
+      beforeEnter: isAuthenticated,
     }
     ,
     {
@@ -52,7 +67,8 @@ const router = createRouter({
     {
       path: '/addprize',
       name: 'addprize',
-      component: () => import('../views/Addprize.vue')
+      component: () => import('../views/Addprize.vue'),
+      beforeEnter: isAuthenticated,
     }
   
  
