@@ -6,6 +6,7 @@ const pool = mysql.createPool({
   password: 'Impact12',
   database: 'DBproject',
 
+
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
