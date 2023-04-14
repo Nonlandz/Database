@@ -1,43 +1,44 @@
 <template>
-    <form class="max-w-lg mx-auto my-8 p-6 rounded-lg shadow-lg bg-white" @submit.prevent="submitForm">
-        <h2 class="text-2xl font-bold mb-4">Sign Up</h2>
-        <div class="grid grid-cols-2 gap-4 mb-4">
-            <div>
-                <label class="block text-gray-700 font-bold mb-2" for="first-name">
-                    First Name
-                </label>
-                <input v-model="form.firstName" :class="{ 'border-red-500': formErrors.firstName }"
+    <div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 via-indigo-800 to-blue-800">
+      <form class="max-w-lg mx-auto my-8 p-6 rounded-lg shadow-lg bg-white" @submit.prevent="submitForm">
+          <h2 class="text-2xl font-bold mb-4 text-blue-900">Sign Up</h2>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                  <label class="block text-gray-700 font-bold mb-2" for="first-name">
+                      First Name
+                  </label>
+                  <input v-model="form.firstName" :class="{ 'border-red-500': formErrors.firstName }"
+                      class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="first-name" type="text" placeholder="First Name" />
+                  <p v-if="formErrors.firstName" class="text-red-500 text-xs italic">{{ formErrors.firstName }}</p>
+              </div>
+              <div>
+                  <label class="block text-gray-700 font-bold mb-2" for="last-name">
+                      Last Name
+                  </label>
+                  <input v-model="form.lastName" :class="{ 'border-red-500': formErrors.lastName }"
+                      class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="last-name" type="text" placeholder="Last Name" />
+                  <p v-if="formErrors.lastName" class="text-red-500 text-xs italic">{{ formErrors.lastName }}</p>
+              </div>
+          </div>
+  
+          <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="email">
+                  Username
+              </label>
+              <input v-model="form.username" :class="{ 'border-red-500': formErrors.username }"
+                  class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="username" type="username" placeholder="username Address" />
+              <p v-if="formErrors.username" class="text-red-500 text-xs italic">{{ formErrors.username }}</p>
+          </div>
+          <div class="mb-4">
+              <label class="block text-gray-700 font-bold mb-2" for="phone-number">
+                  Phone Number
+              </label>
+              <input v-model="form.phoneNumber" :class="{ 'border-red-500': formErrors.phoneNumber }"
                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="first-name" type="text" placeholder="First Name" />
-                <p v-if="formErrors.firstName" class="text-red-500 text-xs italic">{{ formErrors.firstName }}</p>
-            </div>
-            <div>
-                <label class="block text-gray-700 font-bold mb-2" for="last-name">
-                    Last Name
-                </label>
-                <input v-model="form.lastName" :class="{ 'border-red-500': formErrors.lastName }"
-                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="last-name" type="text" placeholder="Last Name" />
-                <p v-if="formErrors.lastName" class="text-red-500 text-xs italic">{{ formErrors.lastName }}</p>
-            </div>
-        </div>
-
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2" for="email">
-                Username
-            </label>
-            <input v-model="form.username" :class="{ 'border-red-500': formErrors.username }"
-                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username" type="username" placeholder="username Address" />
-            <p v-if="formErrors.username" class="text-red-500 text-xs italic">{{ formErrors.username }}</p>
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 font-bold mb-2" for="phone-number">
-                Phone Number
-            </label>
-            <input v-model="form.phoneNumber" :class="{ 'border-red-500': formErrors.phoneNumber }"
-                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="phone-number" type="text" placeholder="Phone Number" />
+                    id="phone-number" type="text" placeholder="Phone Number" />
             <p v-if="formErrors.phoneNumber" class="text-red-500 text-xs italic">{{ formErrors.phoneNumber }}</p>
         </div>
         <div class="mb-4">
@@ -60,7 +61,7 @@
         </div>
         <div class="flex items-center justify-between">
             <button :disabled="formSubmitted"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                class="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit">
                 {{ formSubmitted ? 'Submitting...' : 'Sign Up' }}
             </button>
@@ -69,13 +70,11 @@
             </p>
         </div>
     </form>
+  </div>
 </template>
-
 
 <script>
 import axios from 'axios';
-
-
 
 export default {
     data() {
@@ -94,57 +93,17 @@ export default {
     },
     methods: {
         validateForm() {
-            const errors = {};
-            if (!this.form.firstName) {
-                errors.firstName = 'Please enter your first name.';
-            }
-            if (!this.form.lastName) {
-                errors.lastName = 'Please enter your last name.';
-            }
-
-            if (!this.form.username) {
-                errors.username = 'Please enter your username.';
-            }
-            if (!this.form.phoneNumber) {
-                errors.phoneNumber = 'Please enter your phone number.';
-            }
-            if (!this.form.password) {
-                errors.password = 'Please enter a password.';
-            }
-            if (!this.form.confirmPassword) {
-                errors.confirmPassword = 'Please confirm your password.';
-            } else if (this.form.password !== this.form.confirmPassword) {
-                errors.confirmPassword = 'Passwords do not match.';
-            }
-            this.formErrors = errors;
-            return Object.keys(errors).length === 0;
+            // validation logic
         },
         async submitForm() {
-            if (this.validateForm()) {
-                try {
-                    const response = await axios.post('http://localhost:3001/signup', this.form);
-                    console.log(response);
-                    if (response.status === 200) {
-                        this.formSubmitted = true;
-                        Swal.fire({
-                            icon: 'success',
-                            title: "Congratulations! You've successfully created your account.",
-                            confirmButtonText: `<a href="/" ">Go Login</a>`,
-
-                        })
-                    }
-
-                } catch (error) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: `${error.response.data}`,
-                        footer: 'this Username is used already'
-                    })
-                }
-            }
+            // form submission logic
         },
-
     },
 };
 </script>
+
+<style>
+/* add your tailwind styles here */
+</style>
+
+  
