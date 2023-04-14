@@ -1,6 +1,5 @@
 const express = require("express");
 const pool = require("../config");
-const { router } = require("./test");
 
 router = express.Router();
  // get route  to display on form
