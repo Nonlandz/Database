@@ -73,7 +73,7 @@
           formData.append("trainnum", this.trainnum);
 
           console.log(formData);
-          axios.post('http://localhost:3000/addtrain', formData, {
+          axios.post('http://localhost:3001/addtrain', formData, {
               headers: {
               'Content-Type': 'application/json'
               }

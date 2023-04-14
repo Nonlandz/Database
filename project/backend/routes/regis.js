@@ -16,12 +16,13 @@ router.post('/signup', async (req, res, next) => {
         if (check_user.length > 0) {
             return  res.status(400).send('username already exists' );
         }
-        const results = await conn.query("INSERT INTO user(password, firstname, lastname, username, tel) VALUES(?,?,?,?,?);", [
+        const results = await conn.query("INSERT INTO user(password, firstname, lastname, username, tel, point) VALUES(?,?,?,?,?,?);", [
             password,
             firstName,
             lastName,
             username,
-            phoneNumber
+            phoneNumber,
+            0
         ]);
 
         await conn.commit()
