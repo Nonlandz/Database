@@ -1,5 +1,6 @@
 const express = require("express");
 const pool = require("../config");
+const { router } = require("./test");
 
 router = express.Router();
  // get route  to display on form
@@ -90,6 +91,18 @@ router.post('/addtrain' , async function (req, res, next) {
        station: rows
       });
     } catch (err) {
+
+    }
+  });
+
+  router.get("/prize", async function (req, res, next){
+    try{
+      let [rows, fields] = await pool.query(`SELECT * from item `)
+      console.log(rows)
+      return res.json({
+        prizeinfo: rows
+      });
+    } catch (err){
       return next(err)
     }
   });
@@ -137,6 +150,62 @@ router.post('/addtrain' , async function (req, res, next) {
     }
   });
 
+
+  router.post('/addprize' , async function (req, res, next) {
+    console.log(req.body)
+    const prizename = req.body.prizename;
+    const date = req.body.date;
+    const des = req.body.description;
+    const point = req.body.point;
+  
+    const conn = await pool.getConnection()
+    // Begin transaction
+    await conn.beginTransaction();
+    try {
+      let results = await conn.query(
+        "INSERT INTO item( date_instock, item_name, item_des, point) VALUES( ?, ?, ?, ?);",
+        [ date, prizename, des, point]
+      ) 
+      console.log(results)
+
+  
+      await conn.commit()
+      // res.send("success!");
+    } catch (err) {
+      await conn.rollback();
+      next(err);
+    } finally {
+      console.log('finally')
+      conn.release();
+    }
+  });
+  router.put('/addpoint/:username' , async function (req, res, next) {
+    console.log(req.body)
+   
+  
+    const conn = await pool.getConnection()
+    // Begin transaction
+    await conn.beginTransaction();
+    try {
+      let results = await conn.query(
+        "UPDATE User SET Point = ? WHERE User_id = ?",
+        [req.body.point]
+      ) 
+      console.log(results)
+
+  
+      await conn.commit()
+      // res.send("success!");
+    } catch (err) {
+      await conn.rollback();
+      next(err);
+    } finally {
+      console.log('finally')
+      conn.release();
+    }
+  });
+ 
+ 
   
 
 exports.router = router;

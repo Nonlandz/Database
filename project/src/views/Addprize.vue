@@ -1,0 +1,106 @@
+<template>
+    <form class="w-full max-w-sm">
+  <div class="md:flex md:items-center mb-6">
+    <div class="md:w-1/3">
+      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" >
+        Prizename
+      </label>
+    </div>
+    <div class="md:w-2/3">
+      <input v-model="prizename" class="bg-gray-200 appearance-none border-2 
+      border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none
+       focus:bg-white focus:border-purple-500" name="prizename" type="text">
+    </div>
+</div>
+
+
+    <div class="md:flex md:items-center mb-6">
+    <div class="md:w-1/3">
+      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" >
+        description
+      </label>
+    </div>
+    <div class="md:w-2/3">
+      <textarea v-model="description" class="bg-gray-200 appearance-none border-2 
+      border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none
+       focus:bg-white focus:border-purple-500" name="description">
+       </textarea>
+    </div>
+
+
+  </div>
+  <div class="md:flex md:items-center mb-6">
+    <div class="md:w-1/3">
+      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+        Date
+      </label>
+    </div>
+    <div class="md:w-2/3">
+      <input type="date" v-model="date" class="bg-gray-200 appearance-none border-2
+       border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" name="date" >
+    </div>
+  </div>
+  <div class="md:flex md:items-center mb-6">
+    <div class="md:w-1/3">
+      <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+        point
+      </label>
+    </div>
+  
+    <div class="md:w-2/3">
+      <input v-model="point"  class="bg-gray-200 appearance-none border-2 
+      border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none
+       focus:bg-white focus:border-purple-500" name="point" type="number">
+    </div>
+  </div>
+  <div class="md:flex md:items-center">
+    <div class="md:w-1/3"></div>
+    <div class="md:w-2/3">
+      <button class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline
+       focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" @click=" submit()">
+        Add
+      </button>
+    </div>
+  </div>
+</form>
+</template>
+<script>
+  import axios from 'axios';
+  export default {
+      data() {
+        return {
+          prizename: null,
+          date: null,
+          point:null,
+          description:null,
+      }
+        },
+        methods: {
+      addLike(){
+        
+      },
+      submit(){
+          var formData = new FormData();
+          formData.append("date", this.date)
+          formData.append("point", this.point)
+          formData.append("prizename", this.prizename)
+          formData.append("description", this.description)
+
+          console.log(formData);
+          axios.post('http://localhost:3001/addprize', formData, {
+              headers: {
+              'Content-Type': 'application/json'
+              }
+          }).then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+              console.log(error.message);
+          });
+      },
+      
+  }
+ 
+  }
+  </script>
+
