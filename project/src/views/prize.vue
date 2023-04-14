@@ -1,9 +1,9 @@
 <script setup>
-import Nav from '../components/Nav.vue'
+
 </script>
 <template>
    <main>
-    <Nav />
+   
   </main>
   <div class="container" >
   <div class="card" style="width: 100%; margin-top: 5%;">

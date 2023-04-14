@@ -10,7 +10,7 @@
         </div>
 
         <div class="hidden sm:flex sm:items-center bg-white">
-          <a href="/home" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">หน้าแรก</a>
+          <router-link to="/home" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">หน้าแรก</router-link>
           <a href="/myticket" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">ตั๋วของฉัน</a>
           <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">กระเป๋า</a>
           <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">แลกของรางวัล</a>
@@ -19,8 +19,10 @@
         </div>
 
         <div class="hidden sm:flex sm:items-center bg-white">
-          <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">{{ this.userinfo.Username }}</a>
+          <div href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white"> {{ username }}</div>
+          <div href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white ml-6"> Point : {{ userinfo.Point }} </div>
         </div>
+      <a @click="logout()">logout isus</a>
 
 
       </div>
@@ -49,8 +51,8 @@ export default {
   name: 'Nav',
   data() {
     return {
-      username:null,
-      userinfo:null
+      username:'',
+      userinfo:''
     }
   },
   computed: {
@@ -60,6 +62,8 @@ export default {
   },
   methods : {
     logout(){
+      localStorage.clear()
+      this.$router.push('/')
 
     }
   },

@@ -1,5 +1,6 @@
+
 <template>
-  <Nav></Nav>
+  <Nav />
   <div class="container">
     <div class="booking-form card mt-5">
       <div class="card-header">

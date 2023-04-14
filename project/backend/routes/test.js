@@ -68,6 +68,18 @@ router.post('/addtrain' , async function (req, res, next) {
       return next(err)
     }
   });
+  router.get("/ticket/:userid", async function (req, res, next) {
+    try {
+      let [rows , fields] = await pool.query(`SELECT * FROM ticket where user_id = ? `,  req.params.userid)
+  
+      console.log(rows)
+      return res.json( {
+      ticketinfo: rows
+      });
+    } catch (err) {
+      return next(err)
+    }
+  });
   
 
 exports.router = router;
