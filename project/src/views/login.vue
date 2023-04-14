@@ -14,10 +14,13 @@ import Nav from '../components/Nav.vue'
         <div class="mb-6">
           <label for="password" class="block text-gray-700 font-bold mb-2">Password:</label>
           <input type="password" id="password" v-model="password" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <p  v-if="err != ''" style="color:red;">{{err}} !!</p>
         </div>
+        
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Sign In</button>
         <router-link to="/register" class="ml-2 text-blue-600 hover:text-blue-800">Create an account</router-link>
       </form>
+     
     </div>
   </div>
   
@@ -32,6 +35,7 @@ import Nav from '../components/Nav.vue'
         username: '',
         password: '',
         isLogin : false,
+        err:''
       };
     },
     methods: {
@@ -60,10 +64,15 @@ import Nav from '../components/Nav.vue'
           // redirect to another page or show a success message
         } catch (error) {
           console.error(error.response.data);
-          alert(error.response.data);
+          this.err = error.response.data.message
         }
       },
     },
+    created(){
+      if(this.username = localStorage.getItem("user") != null){
+        this.$router.push({path: '/home'})
+      }
+    }
   };
   </script>
   
