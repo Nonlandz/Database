@@ -20,17 +20,16 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6 form-group">
-              <label for="from">ต้นทาง:</label>
-              
-              <input type="text" id="from" v-model="from" placeholder="ป้อนสถานีต้นทาง" class="form-control">
-            </div>
-            <div class="col-md-6 form-group">
-              <label for="to">ปลายทาง:</label>
-              <input type="text" id="to" v-model="to" placeholder="ป้อนสถานีปลายทาง" class="form-control">
-            </div>
-          </div>
+          <div class="row" v-if="routeSelected">
+  <div class="col-md-6 form-group">
+    <label for="from">ต้นทาง:</label>
+    <input type="text" id="from" v-model="from" placeholder="ป้อนสถานีต้นทาง" class="form-control">
+  </div>
+  <div class="col-md-6 form-group">
+    <label for="to">ปลายทาง:</label>
+    <input type="text" id="to" v-model="to" placeholder="ป้อนสถานีปลายทาง" class="form-control">
+  </div>
+</div>
           <div class="row">
             <div class="col-md-6 form-group">
               <label for="date">วันที่เดินทาง:</label>
@@ -82,6 +81,7 @@ export default {
       userid:'',
       north:'',
       south:'',
+      routeSelected: false,
       
 
 
@@ -91,6 +91,7 @@ export default {
   methods: {
     selectRoute(route) {
       this.route = route;
+      this.routeSelected = true;
     },
     submitForm() {
       var dest_name = this.from +" - " + this.to;
