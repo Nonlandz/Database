@@ -20,16 +20,21 @@
               </div>
             </div>
           </div>
-          <div class="row" v-if="routeSelected">
-  <div class="col-md-6 form-group">
-    <label for="from">ต้นทาง:</label>
-    <input type="text" id="from" v-model="from" placeholder="ป้อนสถานีต้นทาง" class="form-control">
-  </div>
-  <div class="col-md-6 form-group">
-    <label for="to">ปลายทาง:</label>
-    <input type="text" id="to" v-model="to" placeholder="ป้อนสถานีปลายทาง" class="form-control">
-  </div>
-</div>
+          <div class="row" v-if="station!= null">
+            <div class="col-md-6 form-group">
+              <label for="from">ต้นทาง:</label>
+              
+              <select id="class" v-model="from" class="form-control" >
+                <option :value="index.station_name" v-for="index in station" :key="index.station_id">{{ index.station_name}}</option>
+              </select>
+            </div>
+            <div class="col-md-6 form-group">
+              <label for="to">ปลายทาง:</label>
+              <select id="class" v-model="to" class="form-control" >
+                <option :value="index.station_name" v-for="index in station" :key="index.station_id">{{ index.station_name}}</option>
+              </select>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-6 form-group">
               <label for="date">วันที่เดินทาง:</label>
@@ -79,11 +84,8 @@ export default {
       ticketClass: '',
       userinfo:'',
       userid:'',
-      north:'',
-      south:'',
-      routeSelected: false,
+      station:null
       
-
 
      
     };
@@ -91,7 +93,17 @@ export default {
   methods: {
     selectRoute(route) {
       this.route = route;
-      this.routeSelected = true;
+      axios.get(`http://localhost:3001/station/${this.route}`)
+      .then((response) => {
+        this.station = response.data.station;
+        console.log(this.station);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      
+
+
     },
     submitForm() {
       var dest_name = this.from +" - " + this.to;

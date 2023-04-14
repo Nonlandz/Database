@@ -80,6 +80,19 @@ router.post('/addtrain' , async function (req, res, next) {
       return next(err)
     }
   });
+  router.get("/station/:routeid", async function (req, res, next) {
+    try {
+      let [rows , fields] = await pool.query(`SELECT * FROM station where route_id = ? `,  req.params.routeid)
+  
+      console.log(rows)
+      return res.json( {
+      
+       station: rows
+      });
+    } catch (err) {
+      return next(err)
+    }
+  });
 
   router.post('/addticket', async (req, res) => {
     const userid = Number(req.body.userid)
@@ -89,20 +102,27 @@ router.post('/addtrain' , async function (req, res, next) {
     const passengers = Number(req.body.passengers)
     const ticketClass = Number( req.body.ticketClass)
 
-    console.log("userid: ", userid)
-    console.log("route: ", route)
-    console.log("dest_name: " , dest_name)
-    console.log("date: ", date)
-    console.log("passengers :", passengers)
-    console.log("TicketClas", ticketClass)
+  
     
 
     const conn = await pool.getConnection();
 
     try {
+      console.log("userid: ", userid)
+    console.log("route: ", route)
+    console.log("dest_name: " , dest_name)
+    console.log("date: ", date)
+    console.log("passengers :", passengers)
+    console.log("TicketClas", ticketClass)
+      const[results2, fields2] = await conn.query(
+        "select price from destination where dest_name = ?",[dest_name]
+      );
+      const price = results2[0].price
+
+      
       const [result, fields] = await conn.query(
-        "Insert INTO Ticket(user_id, train_id, price, amount, dest_name, route_id, ticket_type, date) VALUES (?, 1, 200, ?, ?, ?, ?, ?)"
-        ,[userid,passengers,dest_name, route, ticketClass, date  ]
+        "Insert INTO Ticket(user_id, train_id, price, amount, dest_name, route_id, ticket_type, date) VALUES (?, 1, ?, ?, ?, ?, ?, ?)"
+        ,[userid,price,passengers,dest_name, route, ticketClass, date  ]
      
       );
 
