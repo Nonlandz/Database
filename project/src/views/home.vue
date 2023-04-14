@@ -25,12 +25,14 @@
               <label for="from">ต้นทาง:</label>
               
               <select id="class" v-model="from" class="form-control" >
+                <option value="0" disabled selected>เลือกสถานีต้นทาง</option>
                 <option :value="index.station_name" v-for="index in station" :key="index.station_id">{{ index.station_name}}</option>
               </select>
             </div>
             <div class="col-md-6 form-group">
               <label for="to">ปลายทาง:</label>
               <select id="class" v-model="to" class="form-control" >
+                <option value="0" disabled selected>เลือกสถานีปลายทาง</option>
                 <option :value="index.station_name" v-for="index in station" :key="index.station_id">{{ index.station_name}}</option>
               </select>
             </div>
@@ -93,6 +95,8 @@ export default {
   methods: {
     selectRoute(route) {
       this.route = route;
+      this.from = "0"
+      this.to = "0"
       axios.get(`http://localhost:3001/station/${this.route}`)
       .then((response) => {
         this.station = response.data.station;
