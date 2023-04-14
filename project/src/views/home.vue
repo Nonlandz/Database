@@ -1,6 +1,7 @@
 
 <template>
-  <Nav />
+  <div>
+<Nav></Nav>
   <div class="container">
     <div class="booking-form card mt-5">
       <div class="card-header">
@@ -12,10 +13,10 @@
             <div class="col-12 mb-3">
               <label class="mb-1">สายทาง:</label>
               <div>
-                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'north' }" @click="selectRoute('north')">สายเหนือ</button>
-                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'northeast' }" @click="selectRoute('northeast')">สายตะวันออกเฉียงเหนือ</button>
-                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'east' }" @click="selectRoute('east')">สายตะวันออก</button>
-                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'south' }" @click="selectRoute('south')">สายใต้</button>
+                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'nort' }" @click="selectRoute(1)">สายเหนือ</button>
+                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'northeast' }" @click="selectRoute(3)">สายตะวันออกเฉียงเหนือ</button>
+                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'east' }" @click="selectRoute(4)">สายตะวันออก</button>
+                <button type="button" class="btn btn-outline-primary" :class="{ 'active': route === 'south' }" @click="selectRoute(2)">สายใต้</button>
               </div>
             </div>
           </div>
@@ -44,8 +45,8 @@
               <label for="class">ชั้นโดยสาร:</label>
               <select id="class" v-model="ticketClass" class="form-control">
                 <option value="">เลือกชั้นโดยสาร</option>
-                <option value="first">ชั้นหนึ่ง</option>
-                <option value="second">ชั้นสอง</option>
+                <option value=1>ชั้นหนึ่ง</option>
+                <option value=2>ชั้นสอง</option>
               </select>
             </div>
           </div>
@@ -58,11 +59,12 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
 import Nav from '../components/Nav.vue';
-
+import axios from 'axios'
 export default {
   components: {
     Nav,
@@ -75,6 +77,10 @@ export default {
       date: '',
       passengers: 1,
       ticketClass: '',
+      userinfo:'',
+      userid:'',
+
+     
     };
   },
   methods: {
@@ -82,11 +88,50 @@ export default {
       this.route = route;
     },
     submitForm() {
-      alert(
-        `Booking train ticket:\nRoute: ${this.route}\nFrom: ${this.from}\nTo: ${this.to}\nDate: ${this.date}\nPassengers: ${this.passengers}\nTicket class: ${this.ticketClass}`
+      var dest_name = this.from +" - " + this.to;
+
+      var formData = new FormData();
+          formData.append("route", this.route)
+          formData.append("userid", this.userid)
+          formData.append("dest_name", dest_name);
+          formData.append("date", this.date);
+          formData.append("passengers", this.passengers);
+          formData.append("ticketClass", this.ticketClass)
+
+          // route, userid, from, to, date, passengers, ticketClass
+          console.log(formData);
+          alert(
+        `Booking train ticket:\nRoute: ${this.route}\n Destination: ${dest_name}\nDate: ${this.date}\nPassengers: ${this.passengers}\nTicket class: ${this.ticketClass}`
+        
       );
+          axios.post('http://localhost:3001/addticket', formData, {
+              headers: {
+              'Content-Type': 'application/json'
+              }
+          }).then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+              console.log(error.message);
+              console.log(error)
+          });
     },
   },
+  async created() {
+  try {
+    this.username = localStorage.getItem("user");
+    console.log(this.username);
+
+    const response1 = await axios.get(`http://localhost:3001/userinfo/${this.username}`);
+    this.userinfo = response1.data.userinfo[0];
+    this.userid = this.userinfo.User_id;
+    console.log(this.userinfo);
+    console.log(this.userid);
+
+  } catch (error) {
+    console.log(error);
+  }
+},
 };
 </script>
 

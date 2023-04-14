@@ -80,6 +80,42 @@ router.post('/addtrain' , async function (req, res, next) {
       return next(err)
     }
   });
+
+  router.post('/addticket', async (req, res) => {
+    const userid = Number(req.body.userid)
+    const route = Number(req.body.route)
+    const dest_name = req.body.dest_name
+    const date = req.body.date
+    const passengers = Number(req.body.passengers)
+    const ticketClass = Number( req.body.ticketClass)
+
+    console.log("userid: ", userid)
+    console.log("route: ", route)
+    console.log("dest_name: " , dest_name)
+    console.log("date: ", date)
+    console.log("passengers :", passengers)
+    console.log("TicketClas", ticketClass)
+    
+
+    const conn = await pool.getConnection();
+
+    try {
+      const [result, fields] = await conn.query(
+        "Insert INTO Ticket(user_id, train_id, price, amount, dest_name, route_id, ticket_type, date) VALUES (?, 1, 200, ?, ?, ?, ?, ?)"
+        ,[userid,passengers,dest_name, route, ticketClass, date  ]
+     
+      );
+
+     
+    } catch (err) {
+      console.error(err);
+      console.log(err)
+      console.log(err.message)
+      res.status(500).json({ message: 'An error occurred while processing your request' });
+    } finally {
+      conn.release();
+    }
+  });
   
 
 exports.router = router;

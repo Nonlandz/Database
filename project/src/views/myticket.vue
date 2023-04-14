@@ -12,7 +12,7 @@ import Nav from '../components/Nav.vue';
       <div class="card-body">
 
         <div class="container"
-          style="height: 100%; display: flex; justify-content: center; align-items: center; margin-top: 3%;">
+          style="display: flex; justify-content: center; align-items: center; margin-top: 3%;">
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
               <div class="col-md-4">
@@ -21,8 +21,8 @@ import Nav from '../components/Nav.vue';
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">วัน: เวลา: ที่ผ่านพ้นไปนานเท่าไร</h5>
-                  <p class="card-text">ต้นทาง-ปลายทาง ของ 2 เรา</p>
+                  <h5 class="card-title">เวลา: {{ticket.date}} </h5>
+                  <p class="card-text">ต้นทาง-ปลายทาง : {{ticket.dest_name}} </p>
                   <p class="card-text">จำนวนผู้โดยสาร : {{ ticket.amount }}</p>
                   <p class="card-text">ราคา: {{ ticket.price }}</p>
                   <p class="card-text" v-if="ticket.ticket_type == 1">ประเภทตั๋ว: First class </p>
