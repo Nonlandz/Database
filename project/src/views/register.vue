@@ -93,11 +93,57 @@ export default {
     },
     methods: {
         validateForm() {
-            // validation logic
+            const errors = {};
+            if (!this.form.firstName) {
+                errors.firstName = 'Please enter your first name.';
+            }
+            if (!this.form.lastName) {
+                errors.lastName = 'Please enter your last name.';
+            }
+
+            if (!this.form.username) {
+                errors.username = 'Please enter your username.';
+            }
+            if (!this.form.phoneNumber) {
+                errors.phoneNumber = 'Please enter your phone number.';
+            }
+            if (!this.form.password) {
+                errors.password = 'Please enter a password.';
+            }
+            if (!this.form.confirmPassword) {
+                errors.confirmPassword = 'Please confirm your password.';
+            } else if (this.form.password !== this.form.confirmPassword) {
+                errors.confirmPassword = 'Passwords do not match.';
+            }
+            this.formErrors = errors;
+            return Object.keys(errors).length === 0;
         },
         async submitForm() {
-            // form submission logic
+            if (this.validateForm()) {
+                try {
+                    const response = await axios.post('http://localhost:3001/signup', this.form);
+                    console.log(response);
+                    if (response.status === 200) {
+                        this.formSubmitted = true;
+                        Swal.fire({
+                            icon: 'success',
+                            title: "Congratulations! You've successfully created your account.",
+                            confirmButtonText: `<a href="/" ">Go Login</a>`,
+
+                        })
+                    }
+
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `${error.response.data}`,
+                        footer: 'this Username is used already'
+                    })
+                }
+            }
         },
+
     },
 };
 </script>
