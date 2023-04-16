@@ -94,13 +94,14 @@ router.post('/addtrain' , async function (req, res, next) {
   });
 
   router.post('/addticket', async (req, res) => {
+    console.log(req.body)
     const userid = Number(req.body.userid)
     const route = Number(req.body.route)
     const dest_name = req.body.dest_name
     const date = req.body.date
     const passengers = Number(req.body.passengers)
     const ticketClass = Number( req.body.ticketClass)
-
+    const train_id = Number(req.body.train_id)
   
     
 
@@ -120,8 +121,8 @@ router.post('/addtrain' , async function (req, res, next) {
 
       
       const [result, fields] = await conn.query(
-        "Insert INTO Ticket(user_id, train_id, price, amount, dest_name, route_id, ticket_type, date) VALUES (?, 1, ?, ?, ?, ?, ?, ?)"
-        ,[userid,price,passengers,dest_name, route, ticketClass, date  ]
+        "Insert INTO Ticket(user_id, train_id, price, amount, dest_name, route_id, ticket_type, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        ,[userid,train_id,price,passengers,dest_name, route, ticketClass, date  ]
      
       );
 
@@ -203,7 +204,16 @@ router.post('/addtrain' , async function (req, res, next) {
   });
   
  
- 
+  router.get("/trains", async function (req, res, next) {
+    try {
+      console.log(req.query)
+      
+      let [rows , fields] = await pool.query(`SELECT * FROM train WHERE route_id = ? and date = ?`, [Number(req.query.route), req.query.date])
+      return res.json(rows)
+    } catch (err) {
+      console.log(err)
+    }
+  });
   
 
 exports.router = router;

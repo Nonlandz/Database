@@ -8,7 +8,7 @@
         <h2>Train Booking</h2>
       </div>
       <div class="card-body">
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="searchtrain">
           <div class="row">
             <div class="col-12 mb-3">
               <label class="mb-1">สายทาง:</label>
@@ -65,6 +65,39 @@
         </form>
       </div>
     </div>
+    <div v-if="this.alltrain.length != null">
+      <div class="container" v-for=" train in alltrain" :key="train.train_id">
+      <div class="card" style="width: 100%; margin-top: 5%;">
+        <div class="card-body">
+  
+          <div class="container"
+            style="display: flex; justify-content: center; align-items: center; margin-top: 3%;">
+            <div class="card mb-3" style="max-width: 540px;">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img src="https://u7.uidownload.com/vector/301/854/vector-cartoon-steam-train-vector-eps.jpg"
+                    class="img-fluid rounded-start" style="height: 100%;">
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">วันที่: {{ train.date }} </h5>
+                    <p class="card-text">ทะเบียนรถ: {{ train.train_num }}</p>
+                  
+                    <p class="card-text"><small class="text-body-secondary">สวัสดีครับสุดหล่อ</small></p>
+                    <button type="submit" class="btn btn-primary" @click="submitForm(train.train_id)">จองตั๋ว</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+  
+  
+      </div>
+    </div>
+  
+    </div>
   </div>
   </div>
 </template>
@@ -86,7 +119,8 @@ export default {
       ticketClass: '',
       userinfo:'',
       userid:'',
-      station:null
+      station:null,
+      alltrain:'',
       
 
      
@@ -109,7 +143,26 @@ export default {
 
 
     },
-    submitForm() {
+     searchtrain(){
+      axios.get('http://localhost:3001/trains',  {params: {
+            route: this.route,
+            date: this.date
+  }
+           
+ } ).then(response => {
+            console.log(response)
+            this.alltrain = response.data
+            if(this.alltrain == ''){
+          alert("หาไม่เจอรอบครับผม")
+        }
+          })
+          .catch(error => {
+              console.log(error.message);
+          });
+
+      
+    },
+    submitForm(train_id) {
       var dest_name = this.from +" - " + this.to;
 
       var formData = new FormData();
@@ -119,6 +172,8 @@ export default {
           formData.append("date", this.date);
           formData.append("passengers", this.passengers);
           formData.append("ticketClass", this.ticketClass)
+          formData.append("train_id", train_id )
+        
 
           // route, userid, from, to, date, passengers, ticketClass
           console.log(formData);
