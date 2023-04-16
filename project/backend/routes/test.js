@@ -1,6 +1,5 @@
 const express = require("express");
 const pool = require("../config");
-
 router = express.Router();
  // get route  to display on form
  router.get("/route", async function (req, res, next) {
@@ -178,8 +177,8 @@ router.post('/addtrain' , async function (req, res, next) {
       conn.release();
     }
   });
-  router.put('/addpoint/:username' , async function (req, res, next) {
-    console.log(req.body)
+  router.put('/updatepoint/:username/:point' , async function (req, res, next) {
+    console.log(req.params)
    
   
     const conn = await pool.getConnection()
@@ -187,8 +186,8 @@ router.post('/addtrain' , async function (req, res, next) {
     await conn.beginTransaction();
     try {
       let results = await conn.query(
-        "UPDATE User SET Point = ? WHERE User_id = ?",
-        [req.body.point]
+        "UPDATE User SET Point = ? WHERE Username = ?",
+        [req.params.point, req.params.username]
       ) 
       console.log(results)
 
@@ -203,6 +202,18 @@ router.post('/addtrain' , async function (req, res, next) {
       conn.release();
     }
   });
+  router.get("/prize", async function (req, res, next){
+    try{
+      let [rows, fields] = await pool.query(`SELECT * from item `)
+      console.log(rows)
+      return res.json({
+        prizeinfo: rows
+      });
+    } catch (err){
+      return next(err)
+    }
+  });
+  
  
  
   

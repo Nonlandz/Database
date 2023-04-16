@@ -1,34 +1,100 @@
 <script setup>
-
+import Nav from '../components/Nav.vue'
 </script>
 <template>
-   <main>
-   
+  <main>
+    <Nav />
   </main>
-  <div class="container" >
-  <div class="card" style="width: 100%; margin-top: 5%;">
-  <div class="card-body">
-    <h5 class="card-title text-center"><strong>หน้าแลกกของรางวัล</strong></h5>
+  <div class="container">
+    <div class="card" style="
+            width: 100%;
+            margin-top: 5%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 3%;
+          ">
+      <div class="card-body">
+        <h5 class="card-title text-center"><strong>หน้าแลกกของรางวัล</strong></h5>
+        <br /><br />
+        <div class="card text-center" style="width: 18rem; margin-bottom: 5%" v-for="prize in prizes"
+          :key="prize.item_id">
+          <img src="https://spacecdn.sheepola.com/static/imgs/product/aYEhdztVvfIl33b6ET6c30RvMl0kKC.jpeg"
+            class="card-img-top" alt="..." />
+          <div class="card-body">
+            <p class="card-text">{{ prize.item_name }}</p>
+            <p class="card-text">description : {{ prize.item_des }}</p>
+            <p class="card-text">point : {{ prize.point }}</p>
 
-
-
-    
-      <div class="card text-center" style="width: 18rem;">
-        <img src="https://static.euronews.com/articles/stories/07/38/48/50/1440x810_cmsv2_75c4ef08-8979-5087-aa7f-6165a018f42f-7384850.jpg" class="card-img-top" alt="...">
-       <div class="card-body">
-        <p class="card-text">ตั๋วลดราคาสำหรับสุดหล่อสุดสวยทั้งหลาย</p>
-        <a href="#" class="btn btn-primary">แลกของรางวัล</a>
+            <a href="#" class="btn btn-primary" @click="change(prize.point)">แลกของรางวัล</a>
+          </div>
+        </div>
       </div>
-</div>
-    
-    
-
-
-    
+    </div>
   </div>
-    
- 
-  </div>
-</div>
 </template>
- 
+<script>
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      prizes: '',
+      userinfo: '',
+      curent_point: ''
+    }
+  },
+  methods: {
+    change(point) {
+      if (this.curent_point >= point) {
+        this.curent_point -= point
+        console.log(this.curent_point)
+        axios
+          .put(`http://localhost:3001/updatepoint/${this.username}/${this.curent_point}`)
+          .catch((err) => {
+            console.log(err)
+          })
+        Swal.fire('Success', 'แลกของรางวัลสำเร็จ', 'success')
+        const myTimeout = setTimeout(reload, 1000);
+
+        function reload() {
+          location.reload()
+        }
+
+
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Point ของคุณไม่เพียงพอ'
+        })
+      }
+    }
+  },
+  created() {
+    this.username = localStorage.getItem('user')
+    axios
+      .get('http://localhost:3001/prize')
+      .then((response) => {
+        this.prizes = response.data.prizeinfo
+        console.log(this.prizes)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    axios
+      .get(`http://localhost:3001/userinfo/${this.username}`)
+      .then((response) => {
+        this.curent_point = response.data.userinfo[0].Point
+        console.log(this.curent_point)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+}
+</script>
