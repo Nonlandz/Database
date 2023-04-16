@@ -89,18 +89,6 @@ router.post('/addtrain' , async function (req, res, next) {
        station: rows
       });
     } catch (err) {
-
-    }
-  });
-
-  router.get("/prize", async function (req, res, next){
-    try{
-      let [rows, fields] = await pool.query(`SELECT * from item `)
-      console.log(rows)
-      return res.json({
-        prizeinfo: rows
-      });
-    } catch (err){
       return next(err)
     }
   });
