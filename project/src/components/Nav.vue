@@ -11,9 +11,9 @@
 
         <div class="hidden sm:flex sm:items-center bg-white">
           <router-link to="/home" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">หน้าแรก</router-link>
-          <a href="/myticket" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">ตั๋วของฉัน</a>
-          <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">กระเป๋า</a>
-          <a href="/prize" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">แลกของรางวัล</a>
+          <router-link to="/myticket" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">ตั๋วของฉัน</router-link>
+            <router-link to="/inventory" class="text-gray-800 text-xl font-semibold hover:text-purple-600 mr-4 no-underline bg-white">กระเป๋า</router-link>
+              <router-link to="/prize" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">แลกของรางวัล</router-link>
 
           <!-- <a href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white">{{ user.Username}}</a> -->
         </div>
@@ -22,7 +22,7 @@
           <div href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white"> {{ username }}</div>
           <div href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white ml-6"> Point : {{ userinfo.Point }} </div>
         </div>
-      <a @click="logout()">logout isus</a>
+      <div class='class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white ' @click="logout()">Logout</div>
 
 
       </div>
@@ -62,7 +62,7 @@ export default {
   },
   methods : {
     logout(){
-      localStorage.clear()
+      localStorage.removeItem("email");
       this.$router.push('/')
 
     }

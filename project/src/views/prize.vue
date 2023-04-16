@@ -20,14 +20,14 @@ import Nav from '../components/Nav.vue'
         <br /><br />
         <div class="card text-center" style="width: 18rem; margin-bottom: 5%" v-for="prize in prizes"
           :key="prize.item_id">
-          <img src="https://spacecdn.sheepola.com/static/imgs/product/aYEhdztVvfIl33b6ET6c30RvMl0kKC.jpeg"
+          <img src="https://static.vecteezy.com/system/resources/previews/012/872/323/original/discount-coupon-3d-png.png"
             class="card-img-top" alt="..." />
           <div class="card-body">
             <p class="card-text">{{ prize.item_name }}</p>
             <p class="card-text">description : {{ prize.item_des }}</p>
             <p class="card-text">point : {{ prize.point }}</p>
 
-            <a href="#" class="btn btn-primary" @click="change(prize.point)">แลกของรางวัล</a>
+            <a href="#" class="btn btn-primary" @click="change(prize.point, prize.item_id)">แลกของรางวัล</a>
           </div>
         </div>
       </div>
@@ -44,16 +44,24 @@ export default {
     return {
       prizes: '',
       userinfo: '',
-      curent_point: ''
+      curent_point: '',
+      itemid: ''
     }
   },
   methods: {
-    change(point) {
+    change(point, itemid) {
       if (this.curent_point >= point) {
         this.curent_point -= point
+        this.itemid = itemid
         console.log(this.curent_point)
+        console.log(this.itemid)
         axios
           .put(`http://localhost:3001/updatepoint/${this.username}/${this.curent_point}`)
+          .catch((err) => {
+            console.log(err)
+          })
+          axios
+          .post(`http://localhost:3001/addinventory/${this.userinfo.User_id}/${this.itemid}`)
           .catch((err) => {
             console.log(err)
           })
@@ -89,6 +97,7 @@ export default {
     axios
       .get(`http://localhost:3001/userinfo/${this.username}`)
       .then((response) => {
+        this.userinfo = response.data.userinfo[0]
         this.curent_point = response.data.userinfo[0].Point
         console.log(this.curent_point)
       })

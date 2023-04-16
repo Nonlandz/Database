@@ -215,5 +215,46 @@ router.post('/addtrain' , async function (req, res, next) {
     }
   });
   
+  router.post('/addinventory/:userid/:itemid', async function (req, res, next) {
+    console.log(req.params.itemid)
+    const conn = await pool.getConnection()
+    // Begin transaction
+    await conn.beginTransaction();
+    try {
+      let results = await conn.query(
+        "INSERT INTO inventory (User_id, item_id) VALUES(?, ?);",
+        [req.params.userid, req.params.itemid]
+      )
+      console.log(results)
+  
+  
+      await conn.commit()
+      // res.send("success!");
+    } catch (err) {
+      await conn.rollback();
+      next(err);
+    } finally {
+      console.log('finally')
+      conn.release();
+    }
+  });
+  router.get("/inventory/:userid", async function (req, res, next) {
+    console.log(req.params)
+    try {
+      let [rows, fields] = await pool.query(`SELECT item_name , item_des , inventory.item_id
+        FROM inventory
+         inner  JOIN item
+        ON  item.item_id = inventory.item_id where inventory.User_id = ?;`, req.params.userid)
+      console.log(req.params.userid)
+      console.log(rows)
+      return res.json({
+        inventoryinfo: rows
+      });
+  
+    } catch (err) {
+      return next(err)
+    }
+  
+  });
 
 exports.router = router;
