@@ -1,6 +1,18 @@
 const express = require("express");
 const pool = require("../config");
-router = express.Router();
+const router = express.Router();
+const multer = require('multer')
+const path = require("path")
+// SET STORAGE
+var storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './static/uploads')
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+})
+const upload = multer({ storage: storage })
  // get route  to display on form
  router.get("/route", async function (req, res, next) {
   try {
@@ -138,20 +150,21 @@ router.post('/addtrain' , async function (req, res, next) {
   });
 
 
-  router.post('/addprize' , async function (req, res, next) {
+  router.post('/addprize' , upload.single('item_img'),async function (req, res, next) {
     console.log(req.body)
-    const prizename = req.body.prizename;
-    const date = req.body.date;
-    const des = req.body.description;
+    const prizename = req.body.itemname;
+    
+    const des = req.body.itemdes;
     const point = req.body.point;
+    const image = "/uploads/" + req.file.filename;
   
     const conn = await pool.getConnection()
     // Begin transaction
     await conn.beginTransaction();
     try {
       let results = await conn.query(
-        "INSERT INTO item( date_instock, item_name, item_des, point) VALUES( ?, ?, ?, ?);",
-        [ date, prizename, des, point]
+        "INSERT INTO item( item_img, item_name, item_des, point) VALUES( ?, ?, ?, ?);",
+        [ image, prizename, des, point]
       ) 
       console.log(results)
 
@@ -222,7 +235,7 @@ router.post('/addtrain' , async function (req, res, next) {
     await conn.beginTransaction();
     try {
       let results = await conn.query(
-        "INSERT INTO inventory (User_id, item_id) VALUES(?, ?);",
+        "INSERT INTO inventory (User_id, item_id) VALUES(?, ?)",
         [req.params.userid, req.params.itemid]
       )
       console.log(results)

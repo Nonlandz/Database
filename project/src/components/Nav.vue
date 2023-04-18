@@ -62,7 +62,7 @@ export default {
   },
   methods : {
     logout(){
-      localStorage.removeItem("email");
+      localStorage.removeItem("user");
       this.$router.push('/')
 
     }

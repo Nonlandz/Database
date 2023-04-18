@@ -16,11 +16,11 @@ import Nav from '../components/Nav.vue'
             margin-top: 3%;
           ">
       <div class="card-body">
-        <h5 class="card-title text-center"><strong>หน้าแลกกของรางวัล</strong></h5>
+        <h5 class="card-title text-center"><strong>หน้าแลกของรางวัล</strong></h5>
         <br /><br />
         <div class="card text-center" style="width: 18rem; margin-bottom: 5%" v-for="prize in prizes"
           :key="prize.item_id">
-          <img src="https://static.vecteezy.com/system/resources/previews/012/872/323/original/discount-coupon-3d-png.png"
+          <img :src="'http://localhost:3001' +prize.item_img"
             class="card-img-top" alt="..." />
           <div class="card-body">
             <p class="card-text">{{ prize.item_name }}</p>
