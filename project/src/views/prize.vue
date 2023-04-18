@@ -18,6 +18,7 @@ import Nav from '../components/Nav.vue'
       <div class="card-body">
         <h5 class="card-title text-center"><strong>หน้าแลกกของรางวัล</strong></h5>
         <br /><br />
+        <div class="card-container"> 
         <div class="card text-center" style="width: 18rem; margin-bottom: 5%" v-for="prize in prizes"
           :key="prize.item_id">
           <img src="https://static.vecteezy.com/system/resources/previews/012/872/323/original/discount-coupon-3d-png.png"
@@ -33,7 +34,19 @@ import Nav from '../components/Nav.vue'
       </div>
     </div>
   </div>
+  </div>
 </template>
+
+
+<style>
+.card-container {
+  display: flex; /* ใช้ Flexbox */
+  flex-direction: row; /* กำหนดให้เรียงแนวนอน */
+  flex-wrap: wrap; /* ให้การ์ดยาวเมื่อพื้นที่หมด */
+  justify-content: center; /* จัดให้อยู่ตรงกลาง */
+}
+</style>
+
 <script>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
