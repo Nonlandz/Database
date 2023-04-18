@@ -217,6 +217,7 @@ export default {
             itemdes: null,
             point: "",
             file: null,
+            username:'',
       }
         },
         methods: {
@@ -253,15 +254,14 @@ export default {
           })
           .finally(() => {
     console.log("Request completed");
-  });;
+  });
       },
       handleFileUpload(){
           this.file = this.$refs.file.files[0];
           console.log(this.file)
       },
-        addLike() {
+       
 
-        },
         addprice() {
             var formData = new FormData();
             formData.append("itemname", this.itemname)
@@ -284,6 +284,25 @@ export default {
       
   },
   created() {
+    this.username = localStorage.getItem("user");
+    console.log(this.username)
+   
+    
+    axios.get(`http://localhost:3001/userinfo/${this.username}`)
+      .then((response) => {
+        this.userinfo = response.data.userinfo[0];
+        if(response.data.userinfo[0].Usertype != 'admin'){
+            this.$router.push({path: '/home'})
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+    console.log("Request completed");
+  });
+
+
         axios.get("http://localhost:3001/route")
             .then((response) => {
             this.boss = response.data.route;

@@ -106,6 +106,19 @@ router.post('/addtrain' , async function (req, res, next) {
       return next(err)
     }
   });
+  router.get("/ticketprice/:dest_name", async function (req, res, next) {
+    try {
+      let [rows , fields] = await pool.query(`SELECT * FROM destination where dest_name = ? `,  req.params.dest_name)
+  
+      console.log(rows)
+      return res.json( {
+      
+       ticketprice: rows
+      });
+    } catch (err) {
+      return next(err)
+    }
+  });
   router.get("/station/:routeid", async function (req, res, next) {
     try {
       let [rows , fields] = await pool.query(`SELECT * FROM station where route_id = ? `,  req.params.routeid)
@@ -129,7 +142,7 @@ router.post('/addtrain' , async function (req, res, next) {
     const passengers = Number(req.body.passengers)
     const ticketClass = Number( req.body.ticketClass)
     const train_id = Number(req.body.train_id)
-  
+    const price = Number(req.body.price)
     
 
     const conn = await pool.getConnection();
@@ -141,10 +154,9 @@ router.post('/addtrain' , async function (req, res, next) {
     console.log("date: ", date)
     console.log("passengers :", passengers)
     console.log("TicketClas", ticketClass)
-      const[results2, fields2] = await conn.query(
-        "select price from destination where dest_name = ?",[dest_name]
-      );
-      const price = results2[0].price
+    console.log("Price", price)
+     
+      
 
       
       const [result, fields] = await conn.query(
