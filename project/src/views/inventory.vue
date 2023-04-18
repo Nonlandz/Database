@@ -13,7 +13,7 @@ import Nav from '../components/Nav.vue'
                 <div class="flex p-12 space-x-5 ml-44">
                 <div class="card text-center" style="width: 14rem; margin-bottom: 5%" v-for="item in inventoryinfo"
                     :key="item.inventory_id">
-                    <img src="https://static.vecteezy.com/system/resources/previews/012/872/323/original/discount-coupon-3d-png.png"
+                    <img :src="'http://localhost:3001'+item.item_img"
                         class="card-img-top" alt="..." />
                     <div class="card-body">
                         <p class="card-text">{{ item.item_name }}</p>

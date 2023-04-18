@@ -269,7 +269,7 @@ router.post('/addtrain' , async function (req, res, next) {
   router.get("/inventory/:userid", async function (req, res, next) {
     console.log(req.params)
     try {
-      let [rows, fields] = await pool.query(`SELECT item_name , item_des , inventory.item_id
+      let [rows, fields] = await pool.query(`SELECT item_img, item_name , item_des , inventory.item_id
         FROM inventory
          inner  JOIN item
         ON  item.item_id = inventory.item_id where inventory.User_id = ?;`, req.params.userid)

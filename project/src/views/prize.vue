@@ -2,7 +2,7 @@
 import Nav from '../components/Nav.vue'
 </script>
 <template>
-  <div>
+  
   <main>
     <Nav />
   </main>
@@ -20,10 +20,10 @@ import Nav from '../components/Nav.vue'
         <h5 class="card-title text-center"><strong>หน้าแลกของรางวัล</strong></h5>
         <br /><br />
         <div class="card-container"> 
-        <div class="card text-center" style="width: 18rem; margin-bottom: 5%" v-for="prize in prizes"
+        <div class="card text-center mr-3" style="width: 18rem; margin-bottom: 5%" v-for="prize in prizes"
           :key="prize.item_id">
           <img :src="'http://localhost:3001' +prize.item_img"
-            class="card-img-top" alt="..." />
+            class="card-img-top object-contain h-48 w-96" alt="..." />
           <div class="card-body">
             <p class="card-text">{{ prize.item_name }}</p>
             <p class="card-text">description : {{ prize.item_des }}</p>
