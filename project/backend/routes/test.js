@@ -2,7 +2,8 @@ const express = require("express");
 const pool = require("../config");
 const router = express.Router();
 const multer = require('multer')
-const path = require("path")
+const path = require("path");
+const { INTEGER } = require("sequelize");
 // SET STORAGE
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -96,7 +97,8 @@ router.post('/addtrain' , async function (req, res, next) {
   });
   router.get("/ticket/:userid", async function (req, res, next) {
     try {
-      let [rows , fields] = await pool.query(`SELECT * FROM ticket where user_id = ? `,  req.params.userid)
+      let [rows , fields] = await pool.query(`SELECT * FROM ticket 
+      join train using (train_id) where user_id = ? `,  req.params.userid)
   
       console.log(rows)
       return res.json( {
@@ -146,7 +148,7 @@ router.post('/addtrain' , async function (req, res, next) {
     
 
     const conn = await pool.getConnection();
-
+    await conn.beginTransaction();
     try {
       console.log("userid: ", userid)
     console.log("route: ", route)
@@ -164,13 +166,14 @@ router.post('/addtrain' , async function (req, res, next) {
         ,[userid,train_id,price,passengers,dest_name, route, ticketClass, date  ]
      
       );
-
+     
      
     } catch (err) {
       console.error(err);
       console.log(err)
       console.log(err.message)
       res.status(500).json({ message: 'An error occurred while processing your request' });
+      await conn.rollback();
     } finally {
       conn.release();
     }

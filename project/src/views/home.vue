@@ -122,6 +122,7 @@ export default {
       station:null,
       alltrain:'',
       price:'',
+      current_point:''
       
 
      
@@ -174,6 +175,9 @@ export default {
      else{
       this.price = Number(response1.data.ticketprice[0].price)
      }
+     this.price = this.price*this.passengers
+
+     this.current_point += Math.floor(this.price/2)
       var formData = new FormData();
           formData.append("route", this.route)
           formData.append("userid", this.userid)
@@ -202,6 +206,12 @@ export default {
               console.log(error.message);
               console.log(error)
           });
+          axios
+          .put(`http://localhost:3001/updatepoint/${this.username}/${this.current_point}`)
+          .catch((err) => {
+            console.log(err)
+          })
+          window.location.reload() 
     },
   },
   async created() {
@@ -214,7 +224,7 @@ export default {
     this.userid = this.userinfo.User_id;
     console.log(this.userinfo);
     console.log(this.userid);
-
+    this.current_point = response1.data.userinfo[0].Point
   } catch (error) {
     console.log(error);
   }

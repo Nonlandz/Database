@@ -21,7 +21,8 @@ import Nav from '../components/Nav.vue';
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">เวลา: {{ticket.date}} </h5>
+                  <h5 class="card-title">วันที่: {{ticket.date}} </h5>
+                  <h5 class="card-title">ทะเบียนรถ {{ticket.train_num}} </h5>
                   <p class="card-text">ต้นทาง-ปลายทาง : {{ticket.dest_name}} </p>
                   <p class="card-text">จำนวนผู้โดยสาร : {{ ticket.amount }}</p>
                   <p class="card-text">ราคา: {{ ticket.price }}</p>
