@@ -53,7 +53,8 @@ export default {
   data() {
     return {
       username:'',
-      userinfo:''
+      userinfo:'',
+      usertype:''
     }
   },
   computed: {

@@ -153,7 +153,7 @@ export default {
             console.log(response)
             this.alltrain = response.data
             if(this.alltrain == ''){
-          alert("หาไม่เจอรอบครับผม")
+          alert("ไม่เจอรอบรถไฟ")
         }
           })
           .catch(error => {

@@ -57,6 +57,7 @@ router.post('/addtrain' , async function (req, res, next) {
 
   
       await conn.commit()
+      res.status(200).json({ message: 'Addtrain Succesfully'});
       // res.send("success!");
     } catch (err) {
       await conn.rollback();
@@ -74,6 +75,20 @@ router.post('/addtrain' , async function (req, res, next) {
       return res.json( {
       
        userinfo: rows
+      });
+    } catch (err) {
+      return next(err)
+    }
+  });
+
+  router.get("/getalluser", async function (req, res, next) {
+    try {
+      let [rows , fields] = await pool.query(`SELECT * FROM user `)
+  
+      // console.log(rows)
+      return res.json( {
+      
+       alluser: rows
       });
     } catch (err) {
       return next(err)

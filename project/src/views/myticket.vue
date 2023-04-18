@@ -42,7 +42,7 @@ import Nav from '../components/Nav.vue';
 
   </div>
   <div v-else>
-     <h1> ไอสัส ยังไม่มี ticket มึงจะกดเข้ามาเพื่อ</h1>
+     <h1> คุณยังไม่มีตั๋ว </h1>
   </div>
   
 </template>

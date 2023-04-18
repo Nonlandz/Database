@@ -73,9 +73,13 @@ const router = createRouter({
       path: '/addprize',
       name: 'addprize',
       component: () => import('../views/addprize.vue')
+    },
+    {
+      path: '/admin',
+      name: '/admin',
+      component: () => import('../views/Admin.vue')
     }
 
-  
   
  
   ]

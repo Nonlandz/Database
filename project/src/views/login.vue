@@ -51,7 +51,10 @@ export default {
             confirmButtonText: "OK",
           })
           localStorage.setItem('user',this.username);
+         
           this.$router.push('/home');
+        
+         
         }
         console.log(response.data);
         // redirect to another page or show a success message
