@@ -22,7 +22,8 @@
           <div href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white"> {{ username }}</div>
           <div href="#" class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white ml-6"> Point : {{ userinfo.Point }} </div>
         </div>
-      <div class='class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white ' @click="logout()">Logout</div>
+        <div class="text-gray-800 text-xl font-semibold hover:text-purple-600 no-underline bg-white cursor-pointer" @click="logout()">Logout</div>
+
 
 
       </div>
