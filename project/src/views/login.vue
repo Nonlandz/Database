@@ -51,8 +51,15 @@ export default {
             confirmButtonText: "OK",
           })
           localStorage.setItem('user',this.username);
-         
+          console.log(response.data.user.Usertype)
+         if(response.data.user.Usertype == "user"){
+          
+          console.log("eiei")
           this.$router.push('/home');
+         }
+         else if(response.data.user.Usertype == "admin"){
+          this.$router.push('/admin');
+         }
         
          
         }
