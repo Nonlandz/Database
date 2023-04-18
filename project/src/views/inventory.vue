@@ -5,25 +5,19 @@ import Nav from '../components/Nav.vue'
     <main>
         <Nav />
     </main>
-    <div class="flex items-center">
-    
-            <div class="card-body">
-                <h5 class="card-title text-center mt-6"><strong>INVENTORY</strong></h5>
-                <br /><br />
-                <div class="flex p-12 space-x-5 ml-44">
-                <div class="card text-center" style="width: 14rem; margin-bottom: 5%" v-for="item in inventoryinfo"
-                    :key="item.inventory_id">
-                    <img :src="'http://localhost:3001'+item.item_img"
-                        class="card-img-top" alt="..." />
-                    <div class="card-body">
-                        <p class="card-text">{{ item.item_name }}</p>
-                        <p class="card-text">{{ item.item_des }}</p>
-                    </div>
+    <div class="main">
+        <div class="cards-container">
+            <div class="card" style="width: 14rem;" v-for="item in inventoryinfo"
+                :key="item.inventory_id">
+                <img :src="'http://localhost:3001'+item.item_img"
+                    class="card-img-top" alt="..." />
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.item_name }}</h5>
+                    <p class="card-text">{{ item.item_des }}</p>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 <script>
 import { useRoute } from 'vue-router'
@@ -100,3 +94,57 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Card styles */
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.15s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.card-text {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Grid layout for cards */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+}
+</style>

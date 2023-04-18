@@ -8,7 +8,13 @@ function isAuthenticated(to, from, next) {
   }
 }
 
-
+function isAdmin(to, from, next) {
+  if (localStorage.getItem('userType') === 'admin') {
+    next();
+  } else {
+    next('/home'); // Redirect to home page if not an admin
+  }
+}
 
 
 const router = createRouter({
@@ -56,7 +62,11 @@ const router = createRouter({
       path: '/addtrain',
       name: 'addtrain',
       component: () => import('../views/Addtrain.vue'),
-      beforeEnter: isAuthenticated,
+      beforeEnter: (to, from, next) => {
+        isAuthenticated(to, from, () => {
+          isAdmin(to, from, next);
+        });
+      },
     }
     ,
     {
@@ -67,17 +77,28 @@ const router = createRouter({
      {
       path: '/inventory',
       name: 'inventory',
-      component: () => import('../views/inventory.vue')
+      component: () => import('../views/inventory.vue'),
+      beforeEnter: isAuthenticated
     },
     {
       path: '/addprize',
       name: 'addprize',
-      component: () => import('../views/addprize.vue')
+      component: () => import('../views/addprize.vue'),
+      beforeEnter: (to, from, next) => {
+        isAuthenticated(to, from, () => {
+          isAdmin(to, from, next);
+        });
+      },
     },
     {
       path: '/admin',
       name: '/admin',
-      component: () => import('../views/Admin.vue')
+      component: () => import('../views/Admin.vue'),
+      beforeEnter: (to, from, next) => {
+        isAuthenticated(to, from, () => {
+          isAdmin(to, from, next);
+        });
+      },
     }
 
   

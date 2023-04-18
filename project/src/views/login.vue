@@ -50,7 +50,8 @@ export default {
             title: "Welcome " + response.data.user.Firstname + '!',
             confirmButtonText: "OK",
           })
-          localStorage.setItem('user',this.username);
+          localStorage.setItem('user',this.username)
+          localStorage.setItem('userType', response.data.user.Usertype);;
           console.log(response.data.user.Usertype)
          if(response.data.user.Usertype == "user"){
           
