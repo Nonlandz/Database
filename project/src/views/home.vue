@@ -121,6 +121,7 @@ export default {
       userid:'',
       station:null,
       alltrain:'',
+      price:'',
       
 
      
@@ -162,9 +163,17 @@ export default {
 
       
     },
-    submitForm(train_id) {
+   async submitForm(train_id) {
+      // /ticketprice/:dest_name
       var dest_name = this.from +" - " + this.to;
-
+      const response1 = await axios.get(`http://localhost:3001/ticketprice/${dest_name}`);
+     if(this.ticketClass == 1){
+      this.price = Number(response1.data.ticketprice[0].price) *1.7
+      console.log(this.price)
+     }
+     else{
+      this.price = Number(response1.data.ticketprice[0].price)
+     }
       var formData = new FormData();
           formData.append("route", this.route)
           formData.append("userid", this.userid)
@@ -173,12 +182,13 @@ export default {
           formData.append("passengers", this.passengers);
           formData.append("ticketClass", this.ticketClass)
           formData.append("train_id", train_id )
+          formData.append("price", this.price)
         
 
           // route, userid, from, to, date, passengers, ticketClass
           console.log(formData);
           alert(
-        `Booking train ticket:\nRoute: ${this.route}\n Destination: ${dest_name}\nDate: ${this.date}\nPassengers: ${this.passengers}\nTicket class: ${this.ticketClass}`
+        `Booking train ticket:\nRoute: ${this.route}\n Destination: ${dest_name}\nDate: ${this.date}\nPassengers: ${this.passengers}\nTicket class: ${this.ticketClass} \nprice: ${this.price}`
         
       );
           axios.post('http://localhost:3001/addticket', formData, {
