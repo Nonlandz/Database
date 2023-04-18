@@ -76,7 +76,6 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            trainnum: null,
             itemname: null,
             itemdes: null,
             point: "",
@@ -112,17 +111,7 @@ export default {
         },
 
     },
-    created() {
-        axios.get("http://localhost:3001/route")
-            .then((response) => {
-                this.boss = response.data.route;
-                console.log(this.boss);
-
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
+    
 }
 </script>
 

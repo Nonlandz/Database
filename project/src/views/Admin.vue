@@ -1,5 +1,6 @@
 <template>
 <div>
+    
     <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
         <span class="sr-only">Open sidebar</span>
         <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -12,16 +13,22 @@
            <ul class="space-y-2 font-medium">
             
               <li>
-                 <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                 <a @click="tab=1" href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap" @click="tab=1">Addtrain</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap" >Addtrain</span>
                     <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
                  </a>
               </li>
               <li>
-                 <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a @click="tab=3" href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                   <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                   <span class="flex-1 ml-3 whitespace-nowrap" >Add item</span>
+                </a>
+             </li>
+              <li>
+                 <a @click="tab=2" href="#" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap" @click="tab = 2">Users</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap" >Users</span>
                  </a>
               </li>
             
@@ -118,6 +125,82 @@
               </table>
         </div>
      </div>
+
+     <div v-else-if="tab == 3">
+        <div class="p-4 sm:ml-64">
+            <form class="w-full max-w-sm">
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                            Item name
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input v-model="itemname" class="bg-gray-200 appearance-none border-2 
+                  border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none
+                   focus:bg-white focus:border-purple-500" name="itemname" type="text">
+                    </div>
+                </div>
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                            Item description
+                        </label>
+                    </div>
+                    <div class="md:w-2/3">
+                        <input v-model="itemdes"
+                            class="bg-gray-200 appearance-none border-2 
+                   border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            name="itemdes">
+                    </div>
+                </div>
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                            Point
+                        </label>
+                    </div>
+        
+                    <div class="md:w-2/3">
+                        <input v-model="point"
+                            class="bg-gray-200 appearance-none border-2 
+                   border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                            name="itemdes">
+        
+        
+                    </div>
+                    
+                </div>
+                <div class="md:flex md:items-center mb-6">
+                    <div class="md:w-1/3">
+                        <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4">
+                            Item imagen
+                        </label>
+                    </div>
+        
+                    <div class="mb-4">
+        
+                <div class="file">
+                  <label class="file-label">
+                    <input class="file-input" type="file" id="file" ref="file" @change="handleFileUpload()">
+                   
+                     
+                  </label>
+                </div>
+              </div>
+                </div>
+                <div class="md:flex md:items-center">
+                    <div class="md:w-1/3"></div>
+                    <div class="md:w-2/3">
+                        <button class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline
+                   focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" @click="submit()">
+                            Add
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+     </div>
      </div>
     
 </template>
@@ -130,6 +213,10 @@ export default {
           tab:1,
           boss:"",
           alluser:'',
+          itemname: null,
+            itemdes: null,
+            point: "",
+            file: null,
       }
         },
         methods: {
@@ -168,6 +255,32 @@ export default {
     console.log("Request completed");
   });;
       },
+      handleFileUpload(){
+          this.file = this.$refs.file.files[0];
+          console.log(this.file)
+      },
+        addLike() {
+
+        },
+        addprice() {
+            var formData = new FormData();
+            formData.append("itemname", this.itemname)
+            formData.append("itemdes", this.itemdes)
+            formData.append("point", this.point)
+            formData.append("item_img", this.file)
+
+            console.log(formData);
+            axios.post('http://localhost:3001/addprize', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
+                console.log(response)
+            })
+                .catch(error => {
+                    console.log(error.message);
+                });
+        },
       
   },
   created() {
