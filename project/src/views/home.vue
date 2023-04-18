@@ -212,3 +212,91 @@ export default {
 };
 </script>
 
+<style scoped>
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.booking-form {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.card-header {
+    background-color: #343a40;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-outline-primary {
+    background-color: transparent;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.btn-outline-primary.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-outline-primary:hover {
+    background-color: #0056b3;
+    color: #fff;
+    border-color: #0056b3;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+
+
+</style>
